@@ -1,6 +1,6 @@
 @echo off
 
-SET "pathFichier=donnees\coordonnees.txt"
+SET "pathFichier=%~1"
 IF NOT EXIST "%pathFichier%" goto :eof
 
 :: Vérifie si le nom du fichier temporaires existe ::
