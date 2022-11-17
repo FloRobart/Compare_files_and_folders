@@ -1,21 +1,45 @@
 @echo off
 
-SET "pathFichier=%~1"
-IF NOT EXIST "%pathFichier%" goto :eof
+SET "pathFichier1=%~1"
+SET "pathFichier2=%~2"
 
-:: Vérifie si le nom du fichier temporaires existe ::
-for /f %%i in ('dir "%pathFichier%" /a:-d ^| find "*.txt"') do echo %%i
+:choixFichier1
+IF NOT EXIST "%pathFichier1%" (
+    :: Demande à l'utilisateur de choisir un fichier 1 valide
+    echo Veuillez choisir le premier fichier à comparer
+    SET /P pathFichier1="Chemin et/ou nom du fichier : "
+    goto :choixFichier1
+)
+
+:choixFichier2
+IF NOT EXIST "%pathFichier2%" (
+    :: Demande à l'utilisateur de choisir un fichier 1 valide
+    echo Veuillez choisir le deuxième fichier à comparer
+    SET /P pathFichier2="Chemin et/ou nom du fichier : "
+    goto :choixFichier2
+)
+
+
+:: Compte le nombre de fichier présent dans le dossier ::
+FOR /f %%i IN ('dir "%cd%" /a:-d ^| find "fichier"') DO SET "nbFichier=%%i"
+
+
+:: Vérifie si le nom du fichier temporaires existe déjà ::
+FOR /l %%C IN (1, 1, %nbFichier%) DO (
+    IF NOT EXIST temp%%C.txt (
+        SET "nomFichierTemp=temp%%C.txt"
+        goto :passerBoucle
+    ) else (
+        echo le fichier existe deja
+    )
+)
+:passerBoucle
 
 goto :eof
-::FOR /l %%C IN (1, 1, ) DO (
-::IF EXIST temp.txt (
-::    
-::)
-
 :: Permet de connaitre le nombre de lignes dans fichier ::
-FIND /v /c "" < %pathFichier% > temp.txt
-FOR /f "tokens=1 delims=" %%A IN (temp.txt) DO SET /a nbLigne=%%A-1
-del temp.txt
+FIND /v /c "" < %pathFichier% > %nomFichierTemp%
+FOR /f "tokens=1 delims=" %%A IN (%nomFichierTemp%) DO SET /a nbLigne=%%A-1
+del %nomFichierTemp%
 
 
 :: Boucle pour lire les deux fichiers ligne par ligne ::
