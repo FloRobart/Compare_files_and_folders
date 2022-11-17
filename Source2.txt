@@ -1,0 +1,64 @@
+BLANC |1 | 8,30
+BLANC |3a| 6,20: 7,19: 7,21
+BLANC |3b|12,26:12,28:12,30
+BLANC |3c|15,25:16:26:16:28
+BLANC |4 |16,34:15,35:14,36:14,38
+BLANC |5 | 2, 7: 2, 9: 3, 8: 3,10: 4,11
+BLANC |6 | 2,27: 3,26: 4,25: 4,27: 5,26: 6,27
+BLANC |7 |10,13:11,10:11,12:11,14:11,16:12,15:12:16
+BLEU  |1 |
+BLEU  |3a|
+BLEU  |3b|
+BLEU  |3c|
+BLEU  |4 |
+BLEU  |5 |
+BLEU  |6 |
+BLEU  |7 |
+VERT  |1 |
+VERT  |3a|
+VERT  |3b|
+VERT  |3c|
+VERT  |4 |
+VERT  |5 |
+VERT  |6 |
+VERT  |7 |
+JAUNE |1 |
+JAUNE |3a|
+JAUNE |3b|
+JAUNE |3c|
+JAUNE |4 |
+JAUNE |5 |
+JAUNE |6 |
+JAUNE |7 |
+ORANGE|1 |
+ORANGE|3a|
+ORANGE|3b|
+ORANGE|3c|
+ORANGE|4 |
+ORANGE|5 |
+ORANGE|6 |
+ORANGE|7 |
+ROSE  |1 |
+ROSE  |3a|
+ROSE  |3b|
+ROSE  |3c|
+ROSE  |4 |
+ROSE  |5 |
+ROSE  |6 |
+ROSE  |7 |
+ROUGE |1 |
+ROUGE |3a|
+ROUGE |3b|
+ROUGE |3c|
+ROUGE |4 |
+ROUGE |5 |
+ROUGE |6 |
+ROUGE |7 |
+NOIR  |1 |
+NOIR  |3a|
+NOIR  |3b|
+NOIR  |3c|
+NOIR  |4 |
+NOIR  |5 |
+NOIR  |6 |
+NOIR  |7 |
