@@ -28,9 +28,9 @@ if %nbLigneFichier1% EQU %nbLigneFichier2% (
 )
 
 if "%nbDifference%" EQU "0" (
-    echo les "%pathFichier1%" et "%pathFichier2%" fichiers sont identiques
+    echo les "%pathFichier1%" et "%pathFichier2%" fichiers sont IDENTIQUES
 ) else (
-    echo il y a %nbDifference% entre les fichiers "%pathFichier1%" et "%pathFichier2%"
+    echo il y a %nbDifference% DIFFERENCES entre les fichiers "%pathFichier1%" et "%pathFichier2%"
 )
 
 call :suppressionFichierTemp
