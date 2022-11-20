@@ -4,6 +4,8 @@ SETLOCAL enabledelayedexpansion
 
 SET "pathFichier1=%~1"
 SET "pathFichier2=%~2"
+SET "nomFichierVBSindentique=fichierIdentique.vbs"
+SET "nomFichierVBSdiff=fichierDifferences.vbs"
 SET "nbLigneFichier1="
 SET "nbLigneFichier2="
 SET /a "nbDifference=0"
@@ -19,18 +21,25 @@ call :nbLigneFichier 1
 call :nomFichierTemp 2
 call :nbLigneFichier 2
 
+
+SET "msgFichierDiff=msgbox "
 if %nbLigneFichier1% EQU %nbLigneFichier2% (
     call :compareFichiers
 ) else (
-    echo Le nombre de ligne des deux fichiers sont différentes
+    echo %msgFichierDiff%"Le nombre de ligne des deux fichiers sont différentes" ^& vbCRLF ^& "%pathFichier1% = %nbLigneFichier1% Lignes" ^& vbCRLF ^& "%pathFichier2% = %nbLigneFichier2% Lignes", vbOkOnly+vbInformation > %nomFichierVBSdiff%
+    call %nomFichierVBSdiff%
     call :suppressionFichierTemp
     goto :eof
 )
 
 if "%nbDifference%" EQU "0" (
-    echo les "%pathFichier1%" et "%pathFichier2%" fichiers sont IDENTIQUES
+    ECHO msgbox "les fichiers ""%pathFichier1%"" et ""%pathFichier2%"" sont IDENTIQUES" > %nomFichierVBSindentique%
+    call %nomFichierVBSindentique%
+    del %nomFichierVBSindentique%
 ) else (
-    echo il y a %nbDifference% DIFFERENCES entre les fichiers "%pathFichier1%" et "%pathFichier2%"
+    echo %msgFichierDiff%"il y a %nbDifference% DIFFERENCES entre les fichiers ""%pathFichier1%"" et ""%pathFichier2%" > %nomFichierVBSdiff%
+    call %nomFichierVBSdiff%
+    del %nomFichierVBSdiff%
 )
 
 call :suppressionFichierTemp
@@ -103,7 +112,7 @@ goto :eof
 :fichierDifferent
     SET /a "nbDifference=%nbDifference%+1"
     SET /a "numLigneDifferent=%~1+1"
-    echo Différence à la ligne %numLigneDifferent%
+    SET "msgFichierDiff=%msgFichierDiff%"Différence à la ligne %numLigneDifferent%" ^& vbCRLF ^& "
 goto :eof
 
 
@@ -111,4 +120,5 @@ goto :eof
 :suppressionFichierTemp
     del %nomFichierTemp1%
     del %nomFichierTemp2%
+    del %nomFichierVBSdiff%
 goto :eof
