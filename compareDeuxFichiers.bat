@@ -28,6 +28,7 @@ if %nbLigneFichier1% EQU %nbLigneFichier2% (
 ) else (
     echo %msgFichierDiff%"Le nombre de ligne des deux fichiers sont différentes" ^& vbCRLF ^& "%pathFichier1% = %nbLigneFichier1% Lignes" ^& vbCRLF ^& "%pathFichier2% = %nbLigneFichier2% Lignes", vbOkOnly+vbInformation > %nomFichierVBSdiff%
     call %nomFichierVBSdiff%
+    del %nomFichierVBSdiff%
     call :suppressionFichierTemp
     goto :eof
 )
@@ -120,5 +121,4 @@ goto :eof
 :suppressionFichierTemp
     del %nomFichierTemp1%
     del %nomFichierTemp2%
-    del %nomFichierVBSdiff%
 goto :eof
