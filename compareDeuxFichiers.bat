@@ -1,5 +1,4 @@
 @echo off
-
 SETLOCAL enabledelayedexpansion
 
 SET "pathFichier1=%~1"
@@ -12,16 +11,17 @@ SET /a "nbDifference=0"
 
 
 :: Code éxecuter (main) ::
-call :choixFichierSource 1
-call :choixFichierSource 2
+FOR /l %%i IN (1, 1, 2) DO (
+    call :choixFichierSource %%i
+)
 
-call :nomFichierTemp 1
-call :nbLigneFichier 1
+FOR /l %%i IN (1, 1, 2) DO (
+    call :nomFichierTemp %%i
+    call :nbLigneFichier %%i
+)
 
-call :nomFichierTemp 2
-call :nbLigneFichier 2
 
-
+:: Compare le nombre de ligne des deux fichiers ::
 SET "msgFichierDiff=msgbox "
 if %nbLigneFichier1% EQU %nbLigneFichier2% (
     call :compareFichiers
@@ -33,6 +33,7 @@ if %nbLigneFichier1% EQU %nbLigneFichier2% (
     goto :eof
 )
 
+:: Compare le contenue des deux fichiers ::
 if "%nbDifference%" EQU "0" (
     ECHO msgbox "les fichiers ""%pathFichier1%"" et ""%pathFichier2%"" sont IDENTIQUES" > %nomFichierVBSindentique%
     call %nomFichierVBSindentique%
@@ -45,7 +46,7 @@ if "%nbDifference%" EQU "0" (
 
 call :suppressionFichierTemp
 ENDLOCAL
-:: Met fin au programme
+:: Met fin au programme ::
 goto :eof
 
 
