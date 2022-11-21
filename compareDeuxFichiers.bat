@@ -56,9 +56,9 @@ goto :eof
     IF NOT EXIST "!pathFichier%~1!" (
         :: Demande à l'utilisateur de choisir un fichier 1 valide ::
         IF %~1==1 (
-            SET /P "pathFichier%~1=Veuillez choisir le chemin et/ou le nom du premier fichier à comparer : "
+            SET /P "pathFichier%~1=Veuillez choisir le chemin et/ou le nom du 1er fichier à comparer : "
         ) ELSE (
-            SET /P "pathFichier%~1=Veuillez choisir le chemin et/ou le nom du deuxième fichier à comparer : "
+            SET /P "pathFichier%~1=Veuillez choisir le chemin et/ou le nom du %~1ème fichier à comparer : "
         )
         goto :choixFichierSource %~1
     )
