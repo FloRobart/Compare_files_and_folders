@@ -1,5 +1,8 @@
 # Fichier texte de test
 Source*.txt
 
+# Fichier temporaires
+temp*.txt
+
 # Dossier de tester
 source*/
