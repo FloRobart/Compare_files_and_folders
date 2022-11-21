@@ -3,10 +3,11 @@ SETLOCAL enabledelayedexpansion
 
 SET "pathFichier1=%~1"
 SET "pathFichier2=%~2"
-SET "nomFichierVBSindentique=fichierIdentique.vbs"
-SET "nomFichierVBSdiff=fichierDifferences.vbs"
 SET "nbLigneFichier1="
 SET "nbLigneFichier2="
+
+SET "nomFichierVBSindentique=fichierIdentique.vbs"
+SET "nomFichierVBSdiff=fichierDifferences.vbs"
 SET /a "nbDifference=0"
 
 
