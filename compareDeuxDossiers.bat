@@ -11,8 +11,6 @@ FOR /l %%i IN (1, 1, 2) DO call :choixDossierSource %%i
 FOR /l %%i IN (1, 1, 2) DO call :nomFichierTemp %%i
 FOR /l %%i IN (1, 1, 2) DO call :nbDossierInSource %%i
 
-echo %nbDossierInSource1% ^| %nbDossierInSource2%
-
 
 
 ::call :compareDossiers
@@ -63,7 +61,8 @@ goto :eof
 :: Compte le nombre de dossiers qu'il y a dans le dossier source ::
 ::---------------------------------------------------------------::
 :nbDossierInSource
-    FOR /f %%A IN ('dir /b /ad "!pathDossier%~1!"') DO SET /a "nbDossierInSource%~1+=1"
+    SET /a "nbDossierInSource%~1=0"
+    FOR /f %%i IN ('dir "!pathDossier%~1!" /b /ad') DO SET /a "nbDossierInSource%~1+=1"
 goto :eof
 
 
