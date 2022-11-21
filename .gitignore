@@ -1,0 +1,5 @@
+# Fichier texte de test
+Source*.txt
+
+# Dossier de tester
+source*/
