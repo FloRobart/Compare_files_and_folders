@@ -23,7 +23,7 @@ FOR /l %%i IN (1, 1, 2) DO (
 
 :: Compare le nombre de ligne des deux fichiers ::
 SET "msgFichierDiff=msgbox "
-if %nbLigneFichier1% EQU %nbLigneFichier2% (
+if "%nbLigneFichier1%" EQU "%nbLigneFichier2%" (
     call :compareFichiers
 ) else (
     echo %msgFichierDiff%"Le nombre de ligne des deux fichiers sont différentes" ^& vbCRLF ^& "%pathFichier1% = %nbLigneFichier1% Lignes" ^& vbCRLF ^& "%pathFichier2% = %nbLigneFichier2% Lignes", vbOkOnly+vbInformation > %nomFichierVBSdiff%
@@ -99,8 +99,8 @@ goto :eof
 
 :: Permet de vérifier si les deux fichiers sont identiques et dans le même ordre ::
 :verifFichier
-    FOR /f "%~1" %%A IN ('type !pathFichier1!') DO (
-        FOR /f "%~1" %%B IN ('type !pathFichier2!') DO (
+    FOR /f "%~1" %%A IN ('type "!pathFichier1!"') DO (
+        FOR /f "%~1" %%B IN ('type "!pathFichier2!"') DO (
             if NOT "%%A" EQU "%%B" (
                 call :fichierDifferent %~2
             )
