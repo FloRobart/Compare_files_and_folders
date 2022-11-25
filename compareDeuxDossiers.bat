@@ -11,7 +11,7 @@ FOR %%i IN (%*) DO (
     SET "pathDossier!count!=%%i"
     echo %%i
 )
-echo %pathDossier!count!%
+echo %pathDossier1%
 echo %pathDossier2%
 echo %pathDossier3%
 
