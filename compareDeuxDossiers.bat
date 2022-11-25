@@ -1,15 +1,42 @@
 @echo off
 SETLOCAL enabledelayedexpansion
 
-SET "pathDossier1=%~1"
-SET "pathDossier2=%~2"
+:: Compte le nombre d'argument passer en paramètre de la fonction ::
+FOR %%i IN (%*) DO SET /a nbArgument+=1
+IF %nbArgument% LSS 2 SET /a "nbArgument=2"
+echo %nbArgument%
+
+FOR %%i IN (%*) DO (
+    SET /a "nbArgument+=1"
+    SET "pathDossier!count!=%%i"
+    echo %%i
+)
+echo %pathDossier!count!%
+echo %pathDossier2%
+echo %pathDossier3%
+
+::SET "pathDossier1=%~1"
+::SET "pathDossier2=%~2"
+SET "sRet="
 
 ::======================::
 :: Code éxecuter (main) ::
 ::======================::
-FOR /l %%i IN (1, 1, 2) DO call :choixDossierSource %%i
-FOR /l %%i IN (1, 1, 2) DO call :nomFichierTemp %%i
-FOR /l %%i IN (1, 1, 2) DO call :nbDossierInSource %%i
+FOR /l %%i IN (1, 1, %nbArgument%) DO call :choixDossierSource %%i
+FOR /l %%i IN (1, 1, %nbArgument%) DO call :nomFichierTemp %%i
+FOR /l %%i IN (1, 1, %nbArgument%) DO call :nbDossierInSource %%i
+
+FOR /l %%a IN (1, 1, %nbArgument%) DO (
+    FOR /l %%b IN (1, 1, %nbArgument%) DO (
+        IF %%b GTR %%a (
+            IF !nbDossierInSource%%a! EQU !nbDossierInSource%%b! (
+                echo "Le nombre de dossier dans le dossier !pathDossier%%a! est identique au nombre de dossier dans le dossier !pathDossier%%b!"
+            ) else (
+                echo "Le nombre de dossier dans le dossier !pathDossier%%a! est différent du nombre de dossier dans le dossier !pathDossier%%b!"
+            )
+        )
+    )
+)
 
 
 
@@ -64,7 +91,6 @@ goto :eof
     SET /a "nbDossierInSource%~1=0"
     FOR /f %%i IN ('dir "!pathDossier%~1!" /b /ad') DO SET /a "nbDossierInSource%~1+=1"
 goto :eof
-
 
 
 
