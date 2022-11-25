@@ -5,8 +5,7 @@
 ::======================::
 SETLOCAL enabledelayedexpansion
     :: Variable ::
-    SET "sRet=msgbox"
-
+    SET "sRetNbSousDossier=msgbox"
 
     :: Compte le nombre d'argument passer en paramètre de la fonction ::
     FOR %%i IN (%*) DO SET /a nbArgument+=1
@@ -22,26 +21,15 @@ SETLOCAL enabledelayedexpansion
 
     :: Vérifie que les dossiers existe et sont valides ::
     FOR /l %%i IN (1, 1, %nbArgument%) DO call :choixDossierSource %%i
+
     :: Nomme les fichiers temporaires ::
     ::FOR /l %%i IN (1, 1, %nbArgument%) DO call :nomFichierTemp %%i
+
     :: Compte le nombre de dossier présent dans les dossiers sources ::
     FOR /l %%i IN (1, 1, %nbArgument%) DO call :nbDossierInSource %%i
 
-    :: Compare le nombre de dossier présent dans les dossiers sources ::
-    FOR /l %%a IN (1, 1, %nbArgument%) DO (
-        FOR /l %%b IN (1, 1, %nbArgument%) DO (
-            IF %%b GTR %%a (
-                IF !nbDossierInSource%%a! EQU !nbDossierInSource%%b! (
-                    SET sRet=%sRet% "Il y a %nbDossierInSource%%%a dans le dossier ""!pathDossier%%a!"" et dans le dossier ""!pathDossier%%b!"" ^& vbCRLF ^& "
-                ) else (
-                    SET sRet=%sRet% "Il y a %nbDossierInSource%%%a dans le dossier ""!pathDossier%%a!"" et %nbDossierInSource%%%b dans le dossier ""!pathDossier%%b!"" ^& vbCRLF ^& "
-                )
-            )
-        )
-    )
-
     :: Afficher le résultat du nombre de dossier dans les dossiers sources ::
-    call :afficherResultat 1
+    call :afficherNbSousDossier 1
 
 
     ::call :compareDossiers
@@ -63,7 +51,7 @@ goto :eof
         ) ELSE (
             SET /P "pathDossier%~1=Veuillez choisir le chemin et/ou le nom du %~1ème dossier à comparer : "
         )
-        call :choixDossierSource %~1
+        goto :choixDossierSource %~1
     )
 goto :eof
 
@@ -101,9 +89,15 @@ goto :eof
 ::--------------------------------------------------------------------::
 :: Affiche le résultat du nombre de dossier dans les dossiers sources ::
 ::--------------------------------------------------------------------::
-:afficherResultat
+:afficherNbSousDossier
     call :nomFichierTemp %~1 "vbs"
-    echo %sRet% > "!nomFichierTemp%~1!"
+
+    FOR /l %%i IN (1, 1, !nbArgument!) DO (
+        SET "sRetNbSousDossier=!sRetNbSousDossier! """!pathDossier%%i!"" contient !nbDossierInSource%%i! sous dossiers""
+        IF %%i LSS !nbArgument! SET "sRetNbSousDossier=!sRetNbSousDossier! ^& vbCRLF ^&"
+    )
+
+    echo !sRetNbSousDossier! > "!nomFichierTemp%~1!"
 goto :eof
 
 
