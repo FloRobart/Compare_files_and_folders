@@ -2,7 +2,7 @@
 Source*.txt
 
 # Fichier temporaires
-temp*.txt
+temp*.*
 
 # Dossier de tester
 source*/
