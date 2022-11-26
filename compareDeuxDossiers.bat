@@ -5,7 +5,8 @@
 ::======================::
 SETLOCAL enabledelayedexpansion
     :: Variable ::
-    SET "sRetNbSousDossier=msgbox"
+    SET "sRetNbSousDossier=msgbox "
+    SET "sRetCompareFichier=msgbox "
 
     :: Compte le nombre d'argument passer en paramètre de la fonction ::
     FOR %%i IN (%*) DO SET /a nbArgument+=1
@@ -37,7 +38,11 @@ SETLOCAL enabledelayedexpansion
 
 
     :: Compare le contenue des fichiers dans les dossiers sources ::
-    call :compareDossier
+    FOR /l %%i IN (1, 1, %nbArgument%) DO (
+        FOR /l %%j IN (%%i, 1, %nbArgument%) DO (
+            IF %%j GTR %%i call :compareDossier %%i %%j
+        )
+    )
 
 
     call :suppressionFichierTemp
@@ -121,9 +126,9 @@ goto :eof
 ::---------------------------::
 :compareDossier
     :: Selectionne les deux fichiers à comparer ::
-    FOR /f %%A IN ('dir "!pathDossier1!" /a-d /b /o:GEN') DO (
-        FOR /f %%B IN ('dir "!pathDossier2!" /a-d /b /o:GEN') DO (
-            call :compareDeuxFichiers "!pathDossier1!\%%A" "!pathDossier2!\%%B"
+    FOR /f %%A IN ('dir "!pathDossier%~1!" /a-d /b /o:EN') DO (
+        FOR /f %%B IN ('dir "!pathDossier%~2!" /a-d /b /o:EN') DO (
+            call :compareDeuxFichiers "!pathDossier%~1!\%%A" "!pathDossier%~2!\%%B"
         )
     )
 goto :eof
@@ -160,18 +165,19 @@ goto :eof
 
 
     :: Compare le nombre de ligne des deux fichiers ::
-    SET "msgFichierDiff=msgbox "
-    if "%nbLigneFichier1%" EQU "%nbLigneFichier2%" (
+    IF "%nbLigneFichier1%" EQU "%nbLigneFichier2%" (
         :: Compare le contenue des deux fichiers ::
         call :compareFichiers
-    ) else (
-        SET msgFichierDiff=%msgFichierDiff%"Le nombre de ligne des deux fichiers sont différentes ""%pathFichier1%"" = %nbLigneFichier1% Lignes ""%pathFichier2%"" = %nbLigneFichier2% Lignes"
+    ) ELSE (
+        echo %msgFichierDiff%"Le nombre de ligne des deux fichiers sont différentes ""%pathFichier1%"" = %nbLigneFichier1% Lignes, ""%pathFichier2%"" = %nbLigneFichier2% Lignes"
+        call :suppressionFichierTemp
+        goto :eof
     )
 
     :: Affiche le résultat de la comparaison ::
-    if "%nbDifferenceFichiers%" EQU "0" (
-        ECHO "le contenue des fichiers ""%pathFichier1%"" et ""%pathFichier2%"" sont IDENTIQUES"
-    ) else (
+    IF "%nbDifferenceFichiers%" EQU "0" (
+        echo "le contenue des fichiers ""%pathFichier1%"" et ""%pathFichier2%"" sont IDENTIQUES"
+    ) ELSE (
         echo %msgFichierDiff%"il y a %nbDifferenceFichiers% lignes DIFFERENTES entre les fichiers ""%pathFichier1%"" et ""%pathFichier2%"
     )
 
