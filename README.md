@@ -17,3 +17,9 @@ Pour lancer le script, il existe deux solutions, la première via l'interface gr
 Après l'avoir téléchargé double-cliquer sur le script puis suivez les instruction qui vous serons données par le script.
 
 #### Terminal Windows
+Après avoir téléchargé le script, ouvrez le gestionnaire de fichier dans le répertoire où se trouve se dernier puis écrivez dans la barre en haut cmd ou powershell.
+
+Illustration pour ouvrir un cmd ou un powershell
+![](./img/cmd.png "Illustration pour ouvrir un cmd ou un powershell")
+
+ Si vous ouvrez powershell écrivez `./VerifJavaVersion.bat` dans ce dernier. Si vous ouvrez un cmd écrivez `VerifJavaVersion.bat`
