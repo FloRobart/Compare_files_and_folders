@@ -23,7 +23,7 @@ Après l'avoir téléchargé double-cliquer sur le script puis suivez les instru
 
 
 #### Terminal Windows
-Après avoir téléchargé le script, ouvrez le gestionnaire de fichier dans le répertoire où se trouve ce dernier puis écrivez dans la barre en haut CMD ou PowerShell. Il est conseillé d'ouvrir un CMD.
+Après avoir téléchargé le script, ouvrez le gestionnaire de fichier dans le répertoire où se trouve ce dernier puis écrivez dans la barre en haut **CMD** ou **PowerShell**. Il est conseillé d'ouvrir un CMD.
 
 Illustration pour ouvrir un CMD ou un PowerShell
 ![](./img/cmd.png "Illustration pour ouvrir un CMD ou un PowerShell")
@@ -47,7 +47,7 @@ Après l'avoir téléchargé double-cliquer sur le script puis suivez les instru
 
 
 #### Terminal Windows
-Après avoir téléchargé le script, ouvrez le gestionnaire de fichier dans le répertoire où se trouve ce dernier puis écrivez dans la barre en haut CMD ou PowerShell. Il est conseillé d'ouvrir un CMD.
+Après avoir téléchargé le script, ouvrez le gestionnaire de fichier dans le répertoire où se trouve ce dernier puis écrivez dans la barre en haut **CMD** ou **PowerShell**. Il est conseillé d'ouvrir un CMD.
 
 Illustration pour ouvrir un CMD ou un PowerShell
 ![](./img/cmd.png "Illustration pour ouvrir un CMD ou un PowerShell")
