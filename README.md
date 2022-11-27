@@ -54,5 +54,5 @@ Illustration pour ouvrir un CMD ou un PowerShell
 
 Si vous ouvrez PowerShell, écrivez `./compareDossiers.bat [argument]` dans ce dernier. Si vous ouvrez un CMD, écrivez `compareDossiers.bat [argument]`
 
-Pour lancer le script avec et des arguments, il faut écrire `compareDossiers.bat "cheminDossier1" "cheminDossier2" "cheminDossier3"`. Il est bon de noter que vous pouvez comparer autant de dossiers que vous voulez mai plus il y en aura plus le traitement prendra de temps.
+Pour lancer le script avec et des arguments, il faut écrire `compareDossiers.bat "cheminDossier1" "cheminDossier2" "cheminDossier3"`. Il est bon de noter que vous pouvez comparer autant de dossiers que vous voulez, mais plus il y en aura plus le traitement prendra de temps.
 Pour le lancer sans argument, il faut simplement écrire `compareDossiers.bat`, puis suivre les instructions données par le script.
