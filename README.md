@@ -9,12 +9,18 @@
         * Interface graphique Windows
         * Terminal Windows
 
+
 ## 1. Comparer deux fichiers
+Se script permet de comparer le contenue de deux fichiers en ignorant le nom de ces derniers.
+
+
 ### Lancement du script
 Pour lancer le script, il existe deux solutions, la première via l'interface graphique de Windows et la deuxième via un terminal (invite de commande/CMD). Il n'y a aucune réelle différence entre les deux méthodes si ce n'est que c'est plus rapide de passer par l'interface graphique Windows.
 
+
 #### Interface graphique Windows
 Après l'avoir téléchargé double-cliquer sur le script puis suivez les instruction qui vous serons données par le script.
+
 
 #### Terminal Windows
 Après avoir téléchargé le script, ouvrez le gestionnaire de fichier dans le répertoire où se trouve se dernier puis écrivez dans la barre en haut cmd ou powershell. Il est conseillé d'ouvrir un CMD.
@@ -28,12 +34,17 @@ Pour lancer le script avec et des arguments il faut écrire `compareDeuxFichiers
 tout les arguments après le deuxième seront ignoré.
 Pour le lancer sans argument il faut simplement écrire `compareDeuxFichiers.bat` puis suivre les instructions données par le script
 
+
 ## 2. Comparer des dossiers
+Se script permet de comparer le contenue des fichiers et le nombre de sous dossier présents dans les dossiers qui sont passé en argument du script.
+
 ### Lancement du script
 Pour lancer le script, il existe deux solutions, la première via l'interface graphique de Windows et la deuxième via un terminal (invite de commande/CMD). Il n'y a aucune réelle différence entre les deux méthodes si ce n'est que c'est plus rapide de passer par l'interface graphique Windows.
 
+
 #### Interface graphique Windows
 Après l'avoir téléchargé double-cliquer sur le script puis suivez les instruction qui vous serons données par le script.
+
 
 #### Terminal Windows
 Après avoir téléchargé le script, ouvrez le gestionnaire de fichier dans le répertoire où se trouve se dernier puis écrivez dans la barre en haut cmd ou powershell. Il est conseillé d'ouvrir un CMD.
