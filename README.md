@@ -24,8 +24,7 @@ Illustration pour ouvrir un cmd ou un powershell
 
 Si vous ouvrez powershell écrivez `./compareDeuxFichiers.bat [argument]` dans ce dernier. Si vous ouvrez un cmd écrivez `compareDeuxFichiers.bat [argument]`
 
-Pour lancer le script avec et des arguments il faut écrire
-`compareDeuxFichiers.bat "cheminFichier1/nomFichier1.extention" "cheminFichier2/nomFichier2.extention"`.
+Pour lancer le script avec et des arguments il faut écrire `compareDeuxFichiers.bat "cheminFichier1/nomFichier1.extention" "cheminFichier2/nomFichier2.extention"`.
 tout les arguments après le deuxième seront ignoré.
 Pour le lancer sans argument il faut simplement écrire `compareDeuxFichiers.bat` puis suivre les instructions données par le script
 
@@ -44,6 +43,5 @@ Illustration pour ouvrir un cmd ou un powershell
 
 Si vous ouvrez powershell écrivez `./compareDossiers.bat [argument]` dans ce dernier. Si vous ouvrez un cmd écrivez `compareDossiers.bat [argument]`
 
-Pour lancer le script avec et des arguments il faut écrire `compareDossiers.bat "cheminDossier1" "cheminDossier2" "cheminDossier3"`
-Il est bon de noter que vous pouvez comparer autant de dossiers que vous voulez mai plus il y en aura plus le traitement prendra de temp.
+Pour lancer le script avec et des arguments il faut écrire `compareDossiers.bat "cheminDossier1" "cheminDossier2" "cheminDossier3"`. Il est bon de noter que vous pouvez comparer autant de dossiers que vous voulez mai plus il y en aura plus le traitement prendra de temp.
 Pour le lancer sans argument il faut simplement écrire `compareDossiers.bat` puis suivre les instructions données par le script
