@@ -24,11 +24,12 @@ Illustration pour ouvrir un cmd ou un powershell
 
 Si vous ouvrez powershell écrivez `./compareDeuxFichiers.bat [argument]` dans ce dernier. Si vous ouvrez un cmd écrivez `compareDeuxFichiers.bat [argument]`
 
-Pour lancer le script avec et des arguments il faut écrire `compareDeuxFichiers.bat "cheminFichier1/nomFichier1.extention" "cheminFichier2/nomFichier2.extention"`
+Pour lancer le script avec et des arguments il faut écrire
+`compareDeuxFichiers.bat "cheminFichier1/nomFichier1.extention" "cheminFichier2/nomFichier2.extention"`.
 tout les arguments après le deuxième seront ignoré.
 Pour le lancer sans argument il faut simplement écrire `compareDeuxFichiers.bat` puis suivre les instructions données par le script
 
-## 1. Comparer deux fichiers
+## 2. Comparer des dossiers
 ### Lancement du script
 Pour lancer le script, il existe deux solutions, la première via l'interface graphique de Windows et la deuxième via un terminal (invite de commande/CMD). Il n'y a aucune réelle différence entre les deux méthodes si ce n'est que c'est plus rapide de passer par l'interface graphique Windows.
 
