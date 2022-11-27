@@ -37,11 +37,18 @@ SETLOCAL enabledelayedexpansion
     call :nomFichierTemp 1 "vbs"
 
     :: Compare le contenue des fichiers dans les dossiers sources ::
+    call :nomFichierTemp 0 "vbs"
+    echo msgbox "Comparaison des fichiers en cours..." ^& vbCRLF ^& "Une fois la comparaison fini, cliquez sur OK ou appuyer sur ENTRER pour supprimer cette fenêtre.", vbOkOnly+vbInformation, "Comparaison en cours" > !nomFichierTemp0!
+    start !nomFichierTemp0!
     FOR /l %%i IN (1, 1, %nbArgument%) DO (
         FOR /l %%j IN (%%i, 1, %nbArgument%) DO (
             IF %%j GTR %%i call :compareDossier %%i %%j
         )
     )
+    taskkill !nomFichierTemp0!
+    echo msgbox "Comparaison des fichiers fini" ^& vbCRLF ^& "cliquez sur OK ou appuyer sur ENTRER pour voir le résultat des comparaisons", vbOkOnly+vbInformation, "Comparaison fini" > !nomFichierTemp0!
+    call !nomFichierTemp0!
+    del !nomFichierTemp0!
 
     :: Affiche le nombre de dossier présent dans les dossiers sources ::
     echo !sRetNbSousDossier! > !nomFichierTemp1!
@@ -261,7 +268,7 @@ goto :eof
 :verifFichier
     FOR /f "%~1" %%A IN ('type "!pathFichier1!"') DO (
         FOR /f "%~1" %%B IN ('type "!pathFichier2!"') DO (
-            if NOT "%%A" EQU "%%B" (
+            if NOT "%%A"=="%%B" (
                 SET /a "nbDifferenceFichiers+=1"
             )
             goto :eof
