@@ -46,6 +46,7 @@ SETLOCAL enabledelayedexpansion
     :: Affiche le nombre de dossier présent dans les dossiers sources ::
     echo !sRetNbSousDossier! > !nomFichierTemp1!
     call !nomFichierTemp1!
+    del !nomFichierTemp1!
 
     :: Affiche le résultat de la comparaison de tout les fichiers ::
     call :AffichageResCompareFichiers
@@ -158,18 +159,12 @@ goto :eof
         FOR /f %%B IN ('dir "!pathDossier%~2!" /a-d /b /o:EN') DO (
             call :compareDeuxFichiers "!pathDossier%~1!\%%A" "!pathDossier%~2!\%%B" !nbSRetFichier!
 
-            echo !pathDossier%~1!\%%A ^| !pathDossier%~2!\%%B
-
             FOR /l %%i IN (!nbSRetFichier!, 1, !nbSRetFichier!) DO (
                 SET "sRetCompareFichier%%i=!sRetCompareFichier%%i! ^& vbCRLF ^& "
                 SET /a "cpt+=1"
 
-
                 IF "!cpt!" EQU "10" (
                     SET sRetCompareFichier%%i=!sRetCompareFichier%%i! "cliquez sur OK ou appuyer sur ENTRER pour continuer."
-                    echo.
-                    echo !sRetCompareFichier%%i!
-                    echo.
                     SET /a "nbSRetFichier+=1"
                     SET /a "cpt=0"
                 )
@@ -277,14 +272,7 @@ goto :eof
 
 :: Suppressions des fichiers temporaires ::
 :suppressionFichierTemp
-    :: Il existe bligatoirement ::
-    IF EXIST "!nomFichierTemp1!" del "!nomFichierTemp1!"
-    IF EXIST "!nomFichierTemp2!" del "!nomFichierTemp2!"
-    IF EXIST "!nomFichierTemp3!" del "!nomFichierTemp3!"
-    IF EXIST "!nomFichierTemp4!" del "!nomFichierTemp4!"
-
-    :: Il existe peut être ::
-    IF EXIST "!nomFichierTemp5!" del "!nomFichierTemp5!"
-    IF EXIST "!nomFichierTemp6!" del "!nomFichierTemp6!"
-    IF EXIST "!nomFichierTemp7!" del "!nomFichierTemp7!"
+    FOR /l %%i IN (1, 1, 4) DO (
+        IF EXIST "!nomFichierTemp%%i!" del "!nomFichierTemp%%i!"
+    )
 goto :eof

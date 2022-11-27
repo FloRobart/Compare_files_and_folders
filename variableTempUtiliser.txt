@@ -1,3 +1,0 @@
-nomFichierTemp1
-nomFichierTemp2
-nomFichierTemp3
