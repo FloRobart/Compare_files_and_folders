@@ -26,16 +26,11 @@ SETLOCAL enabledelayedexpansion
     :: Compte le nombre de dossier présent dans les dossiers sources ::
     FOR /l %%i IN (1, 1, %nbArgument%) DO call :nbDossierInSource %%i
 
-
     ::fonction nbSousDossier potentiellement inutile
     call :nbSousDossier
 
-
     :: Affiche le nombre de dossier présent dans les dossiers sources ::
     call :nomFichierTemp 1 "vbs"
-    echo !sRetNbSousDossier! > !nomFichierTemp1!
-    call !nomFichierTemp1!
-
 
     :: Compare le contenue des fichiers dans les dossiers sources ::
     FOR /l %%i IN (1, 1, %nbArgument%) DO (
@@ -44,7 +39,14 @@ SETLOCAL enabledelayedexpansion
         )
     )
 
+    :: Affiche le nombre de dossier présent dans les dossiers sources ::
+    echo !sRetNbSousDossier! > !nomFichierTemp1!
+    call !nomFichierTemp1!
 
+    :: Affiche le résultat de la comparaison de tout les fichiers ::
+    call :AffichageResCompareFichiers
+
+    :: Supprime les fichiers temporaires ::
     call :suppressionFichierTemp
 ENDLOCAL
 :: Met fin au programme ::
@@ -121,14 +123,43 @@ goto :eof
 
 
 
+::--------------------------------------------------------------::
+:: Affichage du résultat de la comparaison de tout les fichiers ::
+::--------------------------------------------------------------::
+:AffichageResCompareFichiers
+    FOR /l %%i IN (1, 1, !nbSRetFichier!) DO (
+        FOR /l %%j IN (5, 1, %%i+4) DO (
+            call :nomFichierTemp %%j "vbs"
+            echo !sRetCompareFichier%%i! > !nomFichierTemp%%j!
+            call !nomFichierTemp%%j!
+        )
+    )
+goto :eof
+
+
+
 ::---------------------------::
 :: Compare les deux dossiers ::
 ::---------------------------::
 :compareDossier
+    SET /a "cpt=0"
+    SET /a "nbSRetFichier=1"
     :: Selectionne les deux fichiers à comparer ::
     FOR /f %%A IN ('dir "!pathDossier%~1!" /a-d /b /o:EN') DO (
         FOR /f %%B IN ('dir "!pathDossier%~2!" /a-d /b /o:EN') DO (
             call :compareDeuxFichiers "!pathDossier%~1!\%%A" "!pathDossier%~2!\%%B"
+
+
+            FOR /l %%i IN (!nbSRetFichier!, 1, !nbSRetFichier!) DO (
+                SET "sRetCompareFichier%%i=!sRetCompareFichier%%i! ^& vbCRLF ^& "
+                SET /a "cpt+=1"
+
+                IF "!cpt!" GEQ "12" (
+                    SET "sRetCompareFichier%%i=!sRetCompareFichier%%i! cliquez sur OK ou appuyer sur ENTRER pour continuer."
+                    SET /a "nbSRetFichier+=1"
+                    SET /a "cpt=0"
+                )
+            )
         )
     )
 goto :eof
@@ -169,16 +200,16 @@ goto :eof
         :: Compare le contenue des deux fichiers ::
         call :compareFichiers
     ) ELSE (
-        echo %msgFichierDiff%"Le nombre de ligne des deux fichiers sont différentes ""%pathFichier1%"" = %nbLigneFichier1% Lignes, ""%pathFichier2%"" = %nbLigneFichier2% Lignes"
+        SET  sRetCompareFichier=!sRetCompareFichier!"""%pathFichier1%"" à %nbLigneFichier1% Lignes, ""%pathFichier2%"" à %nbLigneFichier2% Lignes"
         call :suppressionFichierTemp
         goto :eof
     )
 
     :: Affiche le résultat de la comparaison ::
     IF "%nbDifferenceFichiers%" EQU "0" (
-        echo "le contenue des fichiers ""%pathFichier1%"" et ""%pathFichier2%"" sont IDENTIQUES"
+        SET sRetCompareFichier=!sRetCompareFichier!"""%pathFichier1%"" et ""%pathFichier2%"" sont IDENTIQUES"
     ) ELSE (
-        echo %msgFichierDiff%"il y a %nbDifferenceFichiers% lignes DIFFERENTES entre les fichiers ""%pathFichier1%"" et ""%pathFichier2%"
+        SET sRetCompareFichier=!sRetCompareFichier!"""%pathFichier1%"" et ""%pathFichier2%"" possède %nbDifferenceFichiers% DIFFERENCES"
     )
 
     call :suppressionFichierTemp
@@ -232,8 +263,13 @@ goto :eof
 
 :: Suppressions des fichiers temporaires ::
 :suppressionFichierTemp
+    :: Il existe bligatoirement ::
     IF EXIST "!nomFichierTemp1!" del "!nomFichierTemp1!"
     IF EXIST "!nomFichierTemp2!" del "!nomFichierTemp2!"
     IF EXIST "!nomFichierTemp3!" del "!nomFichierTemp3!"
     IF EXIST "!nomFichierTemp4!" del "!nomFichierTemp4!"
+
+    :: Il existe peut être ::
+    IF EXIST "!nomFichierTemp5!" del "!nomFichierTemp5!"
+    IF EXIST "!nomFichierTemp6!" del "!nomFichierTemp6!"
 goto :eof
