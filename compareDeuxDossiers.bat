@@ -8,6 +8,10 @@ SETLOCAL enabledelayedexpansion
     SET "sRetNbSousDossier=msgbox "
     SET "sRetCompareFichier=msgbox "
 
+    SET /a "cpt=0"
+    SET /a "nbSRetFichier=1"
+
+
     :: Compte le nombre d'argument passer en paramètre de la fonction ::
     FOR %%i IN (%*) DO SET /a nbArgument+=1
 
@@ -128,10 +132,17 @@ goto :eof
 ::--------------------------------------------------------------::
 :AffichageResCompareFichiers
     FOR /l %%i IN (1, 1, !nbSRetFichier!) DO (
-        FOR /l %%j IN (5, 1, %%i+4) DO (
+        FOR /l %%j IN (%%i+4, 1, %%i+4) DO (
             call :nomFichierTemp %%j "vbs"
-            echo !sRetCompareFichier%%i! > !nomFichierTemp%%j!
+
+            IF %%i EQU !nbSRetFichier! (
+                echo msgbox !sRetCompareFichier%%i! "Fin de la comparaison" > !nomFichierTemp%%j!
+            ) else (
+                echo msgbox !sRetCompareFichier%%i! > !nomFichierTemp%%j!
+            )
+
             call !nomFichierTemp%%j!
+            del !nomFichierTemp%%j!
         )
     )
 goto :eof
@@ -142,20 +153,23 @@ goto :eof
 :: Compare les deux dossiers ::
 ::---------------------------::
 :compareDossier
-    SET /a "cpt=0"
-    SET /a "nbSRetFichier=1"
     :: Selectionne les deux fichiers à comparer ::
     FOR /f %%A IN ('dir "!pathDossier%~1!" /a-d /b /o:EN') DO (
         FOR /f %%B IN ('dir "!pathDossier%~2!" /a-d /b /o:EN') DO (
-            call :compareDeuxFichiers "!pathDossier%~1!\%%A" "!pathDossier%~2!\%%B"
+            call :compareDeuxFichiers "!pathDossier%~1!\%%A" "!pathDossier%~2!\%%B" !nbSRetFichier!
 
+            echo !pathDossier%~1!\%%A ^| !pathDossier%~2!\%%B
 
             FOR /l %%i IN (!nbSRetFichier!, 1, !nbSRetFichier!) DO (
                 SET "sRetCompareFichier%%i=!sRetCompareFichier%%i! ^& vbCRLF ^& "
                 SET /a "cpt+=1"
 
-                IF "!cpt!" GEQ "12" (
-                    SET "sRetCompareFichier%%i=!sRetCompareFichier%%i! cliquez sur OK ou appuyer sur ENTRER pour continuer."
+
+                IF "!cpt!" EQU "10" (
+                    SET sRetCompareFichier%%i=!sRetCompareFichier%%i! "cliquez sur OK ou appuyer sur ENTRER pour continuer."
+                    echo.
+                    echo !sRetCompareFichier%%i!
+                    echo.
                     SET /a "nbSRetFichier+=1"
                     SET /a "cpt=0"
                 )
@@ -200,16 +214,16 @@ goto :eof
         :: Compare le contenue des deux fichiers ::
         call :compareFichiers
     ) ELSE (
-        SET  sRetCompareFichier=!sRetCompareFichier!"""%pathFichier1%"" à %nbLigneFichier1% Lignes, ""%pathFichier2%"" à %nbLigneFichier2% Lignes"
+        SET  sRetCompareFichier%~3=!sRetCompareFichier%~3!"""%pathFichier1%"" à %nbLigneFichier1% Lignes, ""%pathFichier2%"" à %nbLigneFichier2% Lignes"
         call :suppressionFichierTemp
         goto :eof
     )
 
     :: Affiche le résultat de la comparaison ::
     IF "%nbDifferenceFichiers%" EQU "0" (
-        SET sRetCompareFichier=!sRetCompareFichier!"""%pathFichier1%"" et ""%pathFichier2%"" sont IDENTIQUES"
+        SET sRetCompareFichier%~3=!sRetCompareFichier%~3!"""%pathFichier1%"" et ""%pathFichier2%"" sont IDENTIQUES"
     ) ELSE (
-        SET sRetCompareFichier=!sRetCompareFichier!"""%pathFichier1%"" et ""%pathFichier2%"" possède %nbDifferenceFichiers% DIFFERENCES"
+        SET sRetCompareFichier%~3=!sRetCompareFichier%~3!"""%pathFichier1%"" et ""%pathFichier2%"" possède %nbDifferenceFichiers% DIFFERENCES"
     )
 
     call :suppressionFichierTemp
@@ -272,4 +286,5 @@ goto :eof
     :: Il existe peut être ::
     IF EXIST "!nomFichierTemp5!" del "!nomFichierTemp5!"
     IF EXIST "!nomFichierTemp6!" del "!nomFichierTemp6!"
+    IF EXIST "!nomFichierTemp7!" del "!nomFichierTemp7!"
 goto :eof
